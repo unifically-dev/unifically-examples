@@ -1,0 +1,498 @@
+{
+  "info": {
+    "name": "Unifically API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Video, image, music and speech generation through one endpoint: POST /v1/tasks.\n\nSet the `api_key` collection variable (keys: https://unifically.com/api-keys). Run a **Price check** request first: `dry_run: true` returns the cost and charges nothing. Every **Create** request is charged to your balance and stores its `task_id`, so **Get task status** works straight after.\n\nDocs: https://docs.unifically.com"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{api_key}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://api.unifically.com"
+    },
+    {
+      "key": "api_key",
+      "value": ""
+    },
+    {
+      "key": "task_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Account",
+      "item": [
+        {
+          "name": "Get account and balance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v1/account",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "account"
+              ]
+            },
+            "description": "Balance, email and timestamps for the key's account."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Price check (free)",
+      "item": [
+        {
+          "name": "Price check: Veo 3.1 Fast video",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/tasks",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "tasks"
+              ]
+            },
+            "description": "Validates the request and returns `data.cost`. No task is created and nothing is charged.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"google/veo-3.1-fast\",\n  \"input\": {\n    \"prompt\": \"A golden retriever running along a beach at sunset, slow motion, cinematic lighting\",\n    \"duration\": 8\n  },\n  \"dry_run\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Price check: GPT Image 2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/tasks",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "tasks"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"openai/gpt-image-2\",\n  \"input\": {\n    \"prompt\": \"A cozy wooden cabin in a snowy forest at dusk, warm light in the windows, photorealistic\",\n    \"resolution\": \"1K\"\n  },\n  \"dry_run\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Price check: Kling 3.0 video",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/tasks",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "tasks"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"kuaishou/kling-3.0-video\",\n  \"input\": {\n    \"mode\": \"std\",\n    \"aspect_ratio\": \"16:9\",\n    \"native_audio\": true,\n    \"prompt\": \"A golden retriever running along a beach at sunset, slow motion, cinematic lighting\",\n    \"duration\": 5\n  },\n  \"dry_run\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Price check: Seedance 2.0 Pro video",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/tasks",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "tasks"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"bytedance/seedance-2.0-pro\",\n  \"input\": {\n    \"duration\": 4,\n    \"resolution\": \"480p\",\n    \"prompt\": \"A golden retriever running along a beach at sunset, slow motion, cinematic lighting\"\n  },\n  \"dry_run\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Price check: ElevenLabs speech",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/tasks",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "tasks"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"elevenlabs/text-to-speech\",\n  \"input\": {\n    \"text\": \"Welcome to Unifically. This voice was generated with a single API call.\"\n  },\n  \"dry_run\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Create (charged)",
+      "item": [
+        {
+          "name": "Create video: Veo 3.1 Fast",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/tasks",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "tasks"
+              ]
+            },
+            "description": "Charged to your balance. Saves `task_id` to the collection.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"google/veo-3.1-fast\",\n  \"input\": {\n    \"prompt\": \"A golden retriever running along a beach at sunset, slow motion, cinematic lighting\",\n    \"duration\": 8\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const d = pm.response.json().data;",
+                  "if (d && d.task_id) pm.collectionVariables.set('task_id', d.task_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create image: GPT Image 2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/tasks",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "tasks"
+              ]
+            },
+            "description": "Charged to your balance.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"openai/gpt-image-2\",\n  \"input\": {\n    \"prompt\": \"A cozy wooden cabin in a snowy forest at dusk, warm light in the windows, photorealistic\",\n    \"resolution\": \"1K\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const d = pm.response.json().data;",
+                  "if (d && d.task_id) pm.collectionVariables.set('task_id', d.task_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create music: Suno",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/tasks",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "tasks"
+              ]
+            },
+            "description": "Charged to your balance. The Suno routes do not support `dry_run` yet.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"suno-ai/music\",\n  \"input\": {\n    \"mv\": \"chirp-hawk\",\n    \"custom\": false,\n    \"gpt_description_prompt\": \"An upbeat indie pop song about a summer road trip, bright guitars, catchy chorus\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const d = pm.response.json().data;",
+                  "if (d && d.task_id) pm.collectionVariables.set('task_id', d.task_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create speech: ElevenLabs",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/tasks",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "tasks"
+              ]
+            },
+            "description": "Charged to your balance.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"elevenlabs/text-to-speech\",\n  \"input\": {\n    \"text\": \"Welcome to Unifically. This voice was generated with a single API call.\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const d = pm.response.json().data;",
+                  "if (d && d.task_id) pm.collectionVariables.set('task_id', d.task_id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create video with a webhook",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/tasks",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "tasks"
+              ]
+            },
+            "description": "`callback_url` goes at the top level, next to `model` and `input`. The API POSTs there when the task completes or fails.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"google/veo-3.1-fast\",\n  \"input\": {\n    \"prompt\": \"A golden retriever running along a beach at sunset, slow motion, cinematic lighting\",\n    \"duration\": 8\n  },\n  \"callback_url\": \"https://your-server.com/webhook\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const d = pm.response.json().data;",
+                  "if (d && d.task_id) pm.collectionVariables.set('task_id', d.task_id);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tasks",
+      "item": [
+        {
+          "name": "Get task status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v1/tasks/{{task_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "tasks",
+                "{{task_id}}"
+              ]
+            },
+            "description": "`data.status` is `processing`, `completed` or `failed`. When completed, the result is in `data.output` (`video_url`, `image_url` or `audio_url`)."
+          }
+        },
+        {
+          "name": "List tasks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v1/tasks?status=completed&page_size=25",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "tasks"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "completed"
+                },
+                {
+                  "key": "page_size",
+                  "value": "25"
+                }
+              ]
+            },
+            "description": "Newest first. `page_size` is 10, 25, 50 or 100."
+          }
+        }
+      ]
+    }
+  ]
+}
