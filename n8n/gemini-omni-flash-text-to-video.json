@@ -1,0 +1,418 @@
+{
+  "name": "Generate a video with Gemini Omni Flash 1.1 (Unifically API)",
+  "nodes": [
+    {
+      "id": "76dfd2bb-06b0-557f-8f9a-3f10efba0d3b",
+      "name": "Read me",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        -420
+      ],
+      "parameters": {
+        "content": "## Generate a video with Gemini Omni Flash 1.1 (Unifically API)\n\n**Setup (2 minutes)**\n1. Get an API key at https://unifically.com/api-keys\n2. In n8n create a **Header Auth** credential. Name: `Authorization`. Value: `Bearer YOUR_KEY`\n3. Select that credential in both HTTP Request nodes\n4. Open the form URL from the first node and submit a prompt\n\n**Swap the model**\nOpen the **Settings** node. `model` is the model id, `input` is the request body for that model. Nothing else in the workflow depends on the model.\n\nTo edit an existing video instead, use google/gemini-omni-flash-1.1-video-edit and add reference_video_urls to the input.\n\nAll model ids and their inputs: https://docs.unifically.com",
+        "height": 420,
+        "width": 520
+      }
+    },
+    {
+      "id": "bd21dde6-a2ff-5812-84ff-129ebfc6037b",
+      "name": "Prompt form",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -520,
+        80
+      ],
+      "webhookId": "725b8874-a783-5213-8bc3-45974da368dc",
+      "parameters": {
+        "formTitle": "Gemini Omni Flash video generator",
+        "formDescription": "Type a prompt, get a Gemini Omni Flash 1.1 video with sound. Up to 10 seconds.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Prompt",
+              "fieldType": "textarea",
+              "requiredField": true,
+              "placeholder": "A street musician plays violin in the rain, handheld camera"
+            },
+            {
+              "fieldLabel": "Aspect ratio",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "16:9"
+                  },
+                  {
+                    "option": "9:16"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Duration",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "4"
+                  },
+                  {
+                    "option": "6"
+                  },
+                  {
+                    "option": "8"
+                  },
+                  {
+                    "option": "10"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "5a42d4b6-c6bd-5312-a5ae-6ea560110cb0",
+      "name": "Settings",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -300,
+        80
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c775f700-3952-5c51-9de3-c2d0c73ec76e",
+              "name": "api_base",
+              "type": "string",
+              "value": "https://api.unifically.com"
+            },
+            {
+              "id": "38c67486-e106-5194-a847-5e9f7df52bb4",
+              "name": "model",
+              "type": "string",
+              "value": "google/gemini-omni-flash-1.1-video"
+            },
+            {
+              "id": "09aacf00-610b-5699-ad8e-5e9e06a043ac",
+              "name": "input",
+              "type": "object",
+              "value": "={{ { prompt: $json.Prompt, aspect_ratio: $json['Aspect ratio'], duration: Number($json.Duration), resolution: '720p' } }}"
+            },
+            {
+              "id": "d9187f1e-2d99-5429-8607-38505e35a48b",
+              "name": "poll_seconds",
+              "type": "number",
+              "value": 10
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "ae913734-d21d-5a1a-9983-91abaff94620",
+      "name": "Create task",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -80,
+        80
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ME",
+          "name": "Unifically API key"
+        }
+      },
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.api_base }}/v1/tasks",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: $json.model, input: $json.input }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "219cddec-4ab9-5cbb-83ae-1249d2078560",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        140,
+        80
+      ],
+      "webhookId": "ea3a2e54-3914-5ec9-b1fb-468e1c5655ac",
+      "parameters": {
+        "amount": "={{ $('Settings').first().json.poll_seconds }}",
+        "unit": "seconds"
+      }
+    },
+    {
+      "id": "ecb53c15-f773-57b2-b2df-ebae7697bfe1",
+      "name": "Get task",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        360,
+        80
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ME",
+          "name": "Unifically API key"
+        }
+      },
+      "parameters": {
+        "url": "={{ $('Settings').first().json.api_base }}/v1/tasks/{{ $('Create task').first().json.data.task_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      }
+    },
+    {
+      "id": "3cf3f88c-8a9d-54a2-8591-2ebbec3ef572",
+      "name": "Status?",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        580,
+        80
+      ],
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "outputKey": "completed",
+              "renameOutput": true,
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "c81c1ace-a2f5-5217-82ae-f3980a0b4e59",
+                    "leftValue": "={{ $json.data.status }}",
+                    "rightValue": "completed",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "outputKey": "failed",
+              "renameOutput": true,
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "424bb76e-cf2b-55f3-904e-e17ccc694a4a",
+                    "leftValue": "={{ $json.data.status }}",
+                    "rightValue": "failed",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "still running"
+        }
+      }
+    },
+    {
+      "id": "dd7c2860-6a4b-509f-aa21-d50109afd2bf",
+      "name": "Result",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        820,
+        -60
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8af5d940-ab7b-5cf9-b466-30453009878f",
+              "name": "video_url",
+              "type": "string",
+              "value": "={{ $json.data.output.video_url }}"
+            },
+            {
+              "id": "a6fb42d9-1ebc-5245-9cb9-5ce7951001f1",
+              "name": "model",
+              "type": "string",
+              "value": "={{ $('Settings').first().json.model }}"
+            },
+            {
+              "id": "be125c57-86f8-552b-bebf-9ffe34f1e43a",
+              "name": "task_id",
+              "type": "string",
+              "value": "={{ $json.data.task_id }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "8c92cf99-f6f0-5048-9cb2-b9a49715ceba",
+      "name": "Show video",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        -60
+      ],
+      "webhookId": "b3adb405-537c-5105-9f32-3fea95d18644",
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "Your video is ready",
+        "completionMessage": "={{ $json.video_url }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "cb87b72d-4c68-5dff-a62b-810875eddebe",
+      "name": "Generation failed",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        820,
+        100
+      ],
+      "parameters": {
+        "errorMessage": "={{ $json.data.error_message || 'The task failed. Failed tasks are not charged.' }}"
+      }
+    }
+  ],
+  "connections": {
+    "Prompt form": {
+      "main": [
+        [
+          {
+            "node": "Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Settings": {
+      "main": [
+        [
+          {
+            "node": "Create task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create task": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get task": {
+      "main": [
+        [
+          {
+            "node": "Status?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Result": {
+      "main": [
+        [
+          {
+            "node": "Show video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Status?": {
+      "main": [
+        [
+          {
+            "node": "Result",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Generation failed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}
