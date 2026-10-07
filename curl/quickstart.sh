@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # The API in three calls. Needs curl and a key in UNIFICALLY_API_KEY.
 # Nothing in this script is charged: step 2 is a dry run.
+# Model used: openai/gpt-image-2, see https://unifically.com/models/gpt-image-2
 set -euo pipefail
 API="${UNIFICALLY_API_BASE_URL:-https://api.unifically.com}"
 AUTH="Authorization: Bearer ${UNIFICALLY_API_KEY:?set UNIFICALLY_API_KEY}"

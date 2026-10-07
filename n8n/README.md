@@ -2,10 +2,10 @@
 
 Import a `.json` file in n8n (Workflows, Import from file). No community node needed, only the built-in HTTP Request node, so they run on n8n Cloud too.
 
-| File | Model |
-|---|---|
-| `veo-3.1-text-to-video.json` | `google/veo-3.1-fast` |
-| `gemini-omni-flash-text-to-video.json` | `google/gemini-omni-flash-1.1-video` |
+| File | Model | Model page |
+|---|---|---|
+| `veo-3.1-text-to-video.json` | `google/veo-3.1-fast` | [Veo 3.1 API](https://unifically.com/models/veo-3.1) |
+| `gemini-omni-flash-text-to-video.json` | `google/gemini-omni-flash-1.1-video` | [Gemini Omni Flash 1.1 API](https://unifically.com/models/gemini-omni-flash-1.1) |
 
 ## Setup
 

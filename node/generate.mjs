@@ -7,6 +7,12 @@
 //   node generate.mjs music            suno-ai/music
 //   node generate.mjs speech           elevenlabs/text-to-speech
 //   node generate.mjs video --dry-run  price check only, nothing is charged
+//
+// Model pages (parameters and a browser playground):
+//   https://unifically.com/models/veo-3.1
+//   https://unifically.com/models/gpt-image-2
+//   https://unifically.com/models/suno
+//   https://unifically.com/models/elevenlabs
 
 const API = (process.env.UNIFICALLY_API_BASE_URL || 'https://api.unifically.com').replace(/\/$/, '');
 const KEY = process.env.UNIFICALLY_API_KEY;

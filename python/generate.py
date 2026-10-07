@@ -7,6 +7,12 @@ Usage:
   python generate.py music            # suno-ai/music
   python generate.py speech           # elevenlabs/text-to-speech
   python generate.py video --dry-run  # price check only, nothing is charged
+
+Model pages (parameters and a browser playground):
+  https://unifically.com/models/veo-3.1
+  https://unifically.com/models/gpt-image-2
+  https://unifically.com/models/suno
+  https://unifically.com/models/elevenlabs
 """
 import json
 import os

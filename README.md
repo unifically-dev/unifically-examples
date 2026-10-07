@@ -6,7 +6,7 @@ Every request body here is the one the Unifically model pages generate, and each
 
 ## Before you start
 
-1. Make an account at [unifically.com](https://unifically.com). New accounts get a small free balance.
+1. Make an account at [unifically.com](https://unifically.com). New accounts get a $0.50 balance to test with.
 2. Create a key at [unifically.com/api-keys](https://unifically.com/api-keys).
 3. Put it in your environment:
 
@@ -38,6 +38,15 @@ python python/generate.py speech    # elevenlabs/text-to-speech
 ```
 
 `node node/generate.mjs <kind>` does the same with Node 18 or newer. Neither script has dependencies.
+
+The models these examples call, with a playground and the full parameter list on each page:
+
+- [Veo 3.1 API](https://unifically.com/models/veo-3.1) (`google/veo-3.1-fast`)
+- [GPT Image 2 API](https://unifically.com/models/gpt-image-2) (`openai/gpt-image-2`)
+- [Suno API](https://unifically.com/models/suno) (`suno-ai/music`)
+- [ElevenLabs text-to-speech API](https://unifically.com/models/elevenlabs) (`elevenlabs/text-to-speech`)
+- [Seedance 2.0 API](https://unifically.com/models/seedance-2.0) and [Kling 3.0 API](https://unifically.com/models/kling-3.0) (Postman price checks)
+- [Gemini Omni Flash 1.1 API](https://unifically.com/models/gemini-omni-flash-1.1) (n8n workflow)
 
 Each script creates the task, polls `GET /v1/tasks/{task_id}` every five seconds, and prints `data.output` when the status is `completed`. The output holds `video_url`, `image_url` or `audio_url` depending on the model.
 
