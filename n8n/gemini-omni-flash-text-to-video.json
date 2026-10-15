@@ -1,5 +1,5 @@
 {
-  "name": "Generate a video with Gemini Omni Flash 1.1 (Unifically API)",
+  "name": "Generate a video with Gemini Omni Flash 1.1 (UnificAlly API)",
   "nodes": [
     {
       "id": "76dfd2bb-06b0-557f-8f9a-3f10efba0d3b",
@@ -11,7 +11,7 @@
         -420
       ],
       "parameters": {
-        "content": "## Generate a video with Gemini Omni Flash 1.1 (Unifically API)\n\n**Setup (2 minutes)**\n1. Get an API key at https://unifically.com/api-keys\n2. In n8n create a **Header Auth** credential. Name: `Authorization`. Value: `Bearer YOUR_KEY`\n3. Select that credential in both HTTP Request nodes\n4. Open the form URL from the first node and submit a prompt\n\n**Swap the model**\nOpen the **Settings** node. `model` is the model id, `input` is the request body for that model. Nothing else in the workflow depends on the model.\n\nTo edit an existing video instead, use google/gemini-omni-flash-1.1-video-edit and add reference_video_urls to the input.\n\nAll model ids and their inputs: https://docs.unifically.com",
+        "content": "## Generate a video with Gemini Omni Flash 1.1 (UnificAlly API)\n\n**Setup (2 minutes)**\n1. Get an API key at https://unifically.com/api-keys\n2. In n8n create a **Header Auth** credential. Name: `Authorization`. Value: `Bearer YOUR_KEY`\n3. Select that credential in both HTTP Request nodes\n4. Open the form URL from the first node and submit a prompt\n\n**Swap the model**\nOpen the **Settings** node. `model` is the model id, `input` is the request body for that model. Nothing else in the workflow depends on the model.\n\nTo edit an existing video instead, use google/gemini-omni-flash-1.1-video-edit and add reference_video_urls to the input.\n\nAll model ids and their inputs: https://docs.unifically.com",
         "height": 420,
         "width": 520
       }
@@ -132,7 +132,7 @@
       "credentials": {
         "httpHeaderAuth": {
           "id": "REPLACE_ME",
-          "name": "Unifically API key"
+          "name": "UnificAlly API key"
         }
       },
       "parameters": {
@@ -173,7 +173,7 @@
       "credentials": {
         "httpHeaderAuth": {
           "id": "REPLACE_ME",
-          "name": "Unifically API key"
+          "name": "UnificAlly API key"
         }
       },
       "parameters": {

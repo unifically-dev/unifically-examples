@@ -1,5 +1,5 @@
 {
-  "name": "Generate a video with Google Veo 3.1 (Unifically API)",
+  "name": "Generate a video with Google Veo 3.1 (UnificAlly API)",
   "nodes": [
     {
       "id": "f81815a4-ca18-5d82-aecd-7ce1f32aa045",
@@ -11,7 +11,7 @@
         -420
       ],
       "parameters": {
-        "content": "## Generate a video with Google Veo 3.1 (Unifically API)\n\n**Setup (2 minutes)**\n1. Get an API key at https://unifically.com/api-keys\n2. In n8n create a **Header Auth** credential. Name: `Authorization`. Value: `Bearer YOUR_KEY`\n3. Select that credential in both HTTP Request nodes\n4. Open the form URL from the first node and submit a prompt\n\n**Swap the model**\nOpen the **Settings** node. `model` is the model id, `input` is the request body for that model. Nothing else in the workflow depends on the model.\n\nOther Veo 3.1 tiers: google/veo-3.1-lite, google/veo-3.1-quality, google/veo-3.1-lite-relaxed.\n\nAll model ids and their inputs: https://docs.unifically.com",
+        "content": "## Generate a video with Google Veo 3.1 (UnificAlly API)\n\n**Setup (2 minutes)**\n1. Get an API key at https://unifically.com/api-keys\n2. In n8n create a **Header Auth** credential. Name: `Authorization`. Value: `Bearer YOUR_KEY`\n3. Select that credential in both HTTP Request nodes\n4. Open the form URL from the first node and submit a prompt\n\n**Swap the model**\nOpen the **Settings** node. `model` is the model id, `input` is the request body for that model. Nothing else in the workflow depends on the model.\n\nOther Veo 3.1 tiers: google/veo-3.1-lite, google/veo-3.1-quality, google/veo-3.1-lite-relaxed.\n\nAll model ids and their inputs: https://docs.unifically.com",
         "height": 420,
         "width": 520
       }
@@ -129,7 +129,7 @@
       "credentials": {
         "httpHeaderAuth": {
           "id": "REPLACE_ME",
-          "name": "Unifically API key"
+          "name": "UnificAlly API key"
         }
       },
       "parameters": {
@@ -170,7 +170,7 @@
       "credentials": {
         "httpHeaderAuth": {
           "id": "REPLACE_ME",
-          "name": "Unifically API key"
+          "name": "UnificAlly API key"
         }
       },
       "parameters": {

@@ -30,7 +30,7 @@ def dropdown(label, values, required=True):
 WORKFLOWS = [
     {
         "file": "veo-3.1-text-to-video.json",
-        "name": "Generate a video with Google Veo 3.1 (Unifically API)",
+        "name": "Generate a video with Google Veo 3.1 (UnificAlly API)",
         "form_title": "Veo 3.1 video generator",
         "form_description": "Type a prompt, get a Veo 3.1 video with sound.",
         "fields": [
@@ -45,7 +45,7 @@ WORKFLOWS = [
     },
     {
         "file": "gemini-omni-flash-text-to-video.json",
-        "name": "Generate a video with Gemini Omni Flash 1.1 (Unifically API)",
+        "name": "Generate a video with Gemini Omni Flash 1.1 (UnificAlly API)",
         "form_title": "Gemini Omni Flash video generator",
         "form_description": "Type a prompt, get a Gemini Omni Flash 1.1 video with sound. Up to 10 seconds.",
         "fields": [
@@ -64,7 +64,7 @@ AUTH = {
     "authentication": "genericCredentialType",
     "genericAuthType": "httpHeaderAuth",
 }
-CRED = {"httpHeaderAuth": {"id": "REPLACE_ME", "name": "Unifically API key"}}
+CRED = {"httpHeaderAuth": {"id": "REPLACE_ME", "name": "UnificAlly API key"}}
 
 
 def build(w):
