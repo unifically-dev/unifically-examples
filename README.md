@@ -86,6 +86,8 @@ The API sits behind Cloudflare, which rejects Python's default `urllib` user age
 
 There is also an [MCP server](https://github.com/unifically-dev/unifically-mcp) for Claude, Cursor and other agents, and a CLI described at [unifically.com/cli](https://unifically.com/cli).
 
+For Claude Code, Codex and other agents that read skills, [`skills/unifically/SKILL.md`](skills/unifically/SKILL.md) teaches the agent the CLI and the API: how to find a model id, check the cost first and save outputs. Copy the `skills/unifically` folder into your agent's skills directory (for Claude Code: `~/.claude/skills/` or `.claude/skills/` in your project).
+
 ## License
 
 MIT
